@@ -7,9 +7,9 @@
     android:layout_height="match_parent">
 
     <VideoView
+        android:id="@+id/video"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/video"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,8 +44,20 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:maxLines="3"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/video_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/video_title"
+        app:layout_constraintStart_toStartOf="@+id/video" />
 </androidx.constraintlayout.widget.ConstraintLayout>
