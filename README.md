@@ -6,6 +6,7 @@ Aim is to make vertical scrollable video format like instagram reels and tictoc.
 
 ## Issues in this version:
 Voice overlap in some cases, can be fixed by using exoplayer.
+Higher loading times for videos again can be fixed by exoplayer
 
 ## How to contribute?
 All contributions are welcomed, Properly describe changes made and attach supporting ScreenShots in the PR. For major changes first open an issue.
