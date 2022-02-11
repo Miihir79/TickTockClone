@@ -12,6 +12,9 @@ import android.widget.VideoView
 import android.widget.ViewFlipper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.item_video.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +25,7 @@ class VideoAdapter(private var videoList :ArrayList<VideoItem>,private var viewP
     RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
         inner class  ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
             val video: VideoView = itemView.video
+            val videoExo = itemView.exoplayer_video
             var title: TextView = itemView.video_title
             val desc : TextView = itemView.video_desc
             val username : TextView = itemView.video_user
@@ -36,13 +40,19 @@ class VideoAdapter(private var videoList :ArrayList<VideoItem>,private var viewP
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         CoroutineScope(Dispatchers.Main).launch {
 
-            holder.video.setVideoPath(videoList[position].videoUrl)
+            //holder.video.setVideoPath(videoList[position].videoUrl)
             holder.title.text = videoList[position].title
             holder.desc.text = videoList[position].description
             holder.username.text = videoList[position].username
-
-
-            holder.video.setOnPreparedListener {
+            val player = SimpleExoPlayer.Builder(holder.videoExo.context).build()
+            holder.videoExo.player = player
+            val mediaItem = MediaItem.fromUri(videoList[position].videoUrl)
+            player.setMediaItem(mediaItem)
+            player.prepare()
+            player.play()
+            //setting the listener
+            player.playbackState
+            /*holder.video.setOnPreparedListener {
                 holder.progressBar.visibility = View.GONE
                 //finding if the video is stretched or not
                 val videoRatio = it.videoWidth / it.videoHeight.toFloat()
@@ -63,7 +73,14 @@ class VideoAdapter(private var videoList :ArrayList<VideoItem>,private var viewP
                 it.start()
                 viewPager2.setCurrentItem(viewPager2.currentItem + 1, true)
 
-            }
+            }*/
+        }
+    }
+
+    private val listner= object: Player.Listener{
+        override fun onIsLoadingChanged(isLoading: Boolean) {
+
+            super.onIsLoadingChanged(isLoading)
         }
     }
 
